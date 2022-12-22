@@ -1,9 +1,29 @@
+import axios from 'axios'
 import React from 'react'
+import { useState } from 'react'
 const Form = () => {
+
+    const [userName, setUserName] = useState("")
+    const [userEmail, setUserEmail] = useState("")
+
+    const submitData=async()=>{
+        const data={
+            name:userName,
+            email:userEmail
+        }
+        const res=await axios.put('/createuser',data);
+    }
+
+    const handleForm=(event)=>{
+        event.preventDefault();
+        submitData();
+    }
+
+
   return (
     <div>
         
-<form>
+<form onSubmit={handleForm}>
         <section className="text-gray-600 body-font relative">
           <div className="container px-5 py-8 mx-auto">
             <div className="flex flex-col text-center w-full mb-6">
@@ -26,7 +46,9 @@ const Form = () => {
                       id="name"
                       name="name"
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                    />
+                      value={userName}
+                      onClick={(event)=>setUserName(event.target.value)}
+                   />
                   </div>
                 </div>
                 <div className="p-2 w-1/2">
@@ -42,6 +64,7 @@ const Form = () => {
                       id="email"
                       name="email"
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      value={(event)=>setUserEmail(event.target.value)}
                     />
                   </div>
                 </div>
@@ -59,48 +82,8 @@ const Form = () => {
         </section>
       </form>
 
--- UserList --
- <section className="text-gray-600 body-font">
-      <div className="container px-5 py-24 mx-auto">
-        <div className="flex flex-col text-center w-full mb-8">
-          <h1 className="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">
-            All Users
-          </h1>
-        </div>
-        <div className="lg:w-2/3 w-full mx-auto overflow-auto">
-          <table className="table-auto w-full text-left whitespace-no-wrap">
-            <thead>
-              <tr>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
-                  Name
-                </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                  Email
-                </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                  Edit
-                </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                  Delete
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="px-4 py-3">One</td>
-                <td className="px-4 py-3">Two</td>
-                <td className="px-4 py-3">
-                  <button className="hover:text-green-500">Edit</button>
-                </td>
-                <td className="px-4 py-3 text-lg text-gray-900">
-                  <button className="hover:text-red-500">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+
+
     </div>
   )
 }

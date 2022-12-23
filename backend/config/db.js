@@ -8,5 +8,10 @@ exports.connection = () => {
     })
     .then((conn) => {
       console.log(`connection successfull ${conn.connection.host}`);
+    })
+    .catch((error) => {
+      console.log(error);
+      console.log("connection failed");
+      process.exit(1);
     });
 };
